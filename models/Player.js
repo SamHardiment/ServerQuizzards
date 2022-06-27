@@ -1,5 +1,5 @@
 const db = require("../dbConfig");
-module.exports = class User {
+module.exports = class Player {
   constructor(data) {
     this.id = data.id;
     this.name = data.name;
@@ -11,8 +11,8 @@ module.exports = class User {
   static get all() {
     return new Promise(async (resolve, reject) => {
       try {
-        const result = await db.query("SELECT * FROM users;");
-        const users = result.rows.map((user) => new User(user));
+        const result = await db.query("SELECT * FROM players;");
+        const users = result.rows.map((user) => new Player(user));
         resolve(users);
       } catch (err) {
         reject("Error retrieving all users");
