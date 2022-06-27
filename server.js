@@ -8,7 +8,8 @@ app.use(cors());
 app.use(express.json());
 
 //Server Routes
-// const players = require("./routes/players")
+const playersRoute = require("./routes/players");
+app.use("/players", playersRoute);
 
 const server = app.listen(process.env.PORT, () =>
   console.log(`Server started on ${process.env.PORT}`)
