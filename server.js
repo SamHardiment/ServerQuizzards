@@ -14,15 +14,24 @@ app.use("/players", playersRoute);
 const server = app.listen(process.env.PORT, () =>
   console.log(`Server started on ${process.env.PORT}`)
 );
+
+//IO connections and functions
+
 const io = socket(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000"],
     credentials: true,
   },
 });
 
 io.on("connection", (socket) => {
-  console.log(socket.id, "hello1");
+  socket.on("joinRoomPress", (room) => {
+    socket.emit("attachRoom", room);
+    socket.join(room);
+  });
+  socket.on("addUserPress", (user, room) => {
+    socket.to(room).emit("addPlayer", user, room);
+  });
 });
 
 app.get("/", (req, res) => {
