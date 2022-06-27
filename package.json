@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon --legacy-watch server.js",
+    "seedDev": "node dbConfig/seedDev.js",
+    "start": "node server.js",
+    "test": "jest --setupFiles ./test/intergration/config.js --watchAll --detectOpenHandles --runInBand --verbose",
+    "unitTests": "jest --testPathPattern=/unit/ --watchAll --verbose",
+    "coverage": "jest --testPathPattern=/unit/ --coverage"
   },
   "repository": {
     "type": "git",
