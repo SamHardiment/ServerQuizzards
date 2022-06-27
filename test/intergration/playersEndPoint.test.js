@@ -1,12 +1,11 @@
-describe("habits endpoints", () => {
+describe("player endpoints", () => {
   let api;
   beforeEach(async () => {
     await resetTestDB();
   });
 
   beforeAll(async () => {
-    await api.close();
-    api = app.listen(5000, () =>
+    api = app.listen(8000, () =>
       console.log("Test server running on port 8000")
     );
   });
