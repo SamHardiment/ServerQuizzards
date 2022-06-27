@@ -6,7 +6,6 @@ const socket = require("socket.io");
 require("dotenv").config();
 app.use(cors());
 app.use(express.json());
-
 //Server Routes
 const playersRoute = require("./routes/players");
 app.use("/players", playersRoute);
@@ -44,3 +43,4 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
  */
+module.exports = app;
