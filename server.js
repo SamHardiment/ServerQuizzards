@@ -24,6 +24,7 @@ const io = socket(server, {
 
 let players = [];
 io.on("connection", (socket) => {
+  //Helper functions
   function updateUsers(user, room) {
     players.forEach((el) => {
       if (el.room == room) {
@@ -42,6 +43,9 @@ io.on("connection", (socket) => {
     });
   }
 
+  //Socket Requests
+
+  //Home page socket
   socket.on("joinRoomPress", (room) => {
     socket.emit("attachRoom", room);
     socket.join(room);
@@ -51,11 +55,19 @@ io.on("connection", (socket) => {
     }
     checkForUsers(room);
   });
+
   socket.on("addUserPress", (user, room) => {
     updateUsers(user, room);
   });
-  socket.on("sendMessage", (message, room,user) => {
-    console.log(message)
+
+  socket.on("sendData", (room, user, players) => {
+    socket.emit("recieveData", room, user, players);
+  });
+
+  //Game page socket
+
+  socket.on("sendMessage", (message, room, user) => {
+    console.log(message);
     socket.to(room).emit("recieveMessage", user, room);
   });
 });
