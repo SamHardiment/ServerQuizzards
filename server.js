@@ -58,7 +58,7 @@ io.on("connection", (socket) => {
   //Joining room (checks if more than 5)
   socket.on("joinRoomPress", (room) => {
     if (!allRooms.find((el) => el.room == room)) {
-      allRooms.push({ room, players: [] });
+      allRooms.push({ room, players: [], messages: [] });
 
       // console.log(room, allRooms);
     }
