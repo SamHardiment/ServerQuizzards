@@ -24,6 +24,7 @@ const io = socket(server, {
 
 let allRooms = [];
 io.on("connection", (socket) => {
+  //Helper functions
   function updateUsers(user, room) {
     allRooms.forEach((el) => {
       if (el.room == room) {
@@ -46,6 +47,9 @@ io.on("connection", (socket) => {
     });
   }
 
+  //Socket Requests
+
+  //Home page socket
   socket.on("joinRoomPress", (room) => {
     // console.log(allRooms.find((el) => el.room == room).players.length);
     // if (allRooms.find((el) => el.room == room).players.length === 1) {
@@ -60,9 +64,20 @@ io.on("connection", (socket) => {
     }
     checkForUsers(room);
   });
+
   socket.on("addUserPress", (user, room) => {
     updateUsers(user, room);
   });
+<<<<<<< HEAD
+=======
+
+  socket.on("sendData", (room, user, players) => {
+    socket.emit("recieveData", room, user, players);
+  });
+
+  //Game page socket
+
+>>>>>>> 0da27072a6e6943356bfb0befe22c77b81dc1bd7
   socket.on("sendMessage", (message, room, user) => {
     console.log(message);
     socket.to(room).emit("recieveMessage", user, room);
