@@ -28,21 +28,25 @@ io.on("connection", (socket) => {
   function updateUsers(user, room) {
     allRooms.forEach((el) => {
       if (el.room == room) {
-        if (el.players.length === 5) {
-          socket.emit("maxPartyError", room);
-        } else {
-          el.players.push(user);
-          socket.emit("addPlayer", el.players, room);
-          socket.to(room).emit("addPlayer", el.players, room);
-        }
+        el.players.push(user);
+        socket.emit("addPlayer", el.players, room);
+        socket.to(room).emit("addPlayer", el.players, room);
       }
     });
   }
   function checkForUsers(room) {
     allRooms.forEach((el) => {
       if (el.room == room) {
-        socket.emit("addPlayer", el.players, room);
-        socket.to(room).emit("addPlayer", el.players, room);
+        if (el.players.length === 4) {
+          socket.emit("maxPartyError", room);
+          socket.emit("attachRoom", "This room is full!");
+          socket.join(room);
+        } else {
+          socket.emit("addPlayer", el.players, room);
+          socket.to(room).emit("addPlayer", el.players, room);
+          socket.emit("attachRoom", room);
+          socket.join(room);
+        }
       }
     });
   }
@@ -53,12 +57,6 @@ io.on("connection", (socket) => {
 
   //Joining room (checks if more than 5)
   socket.on("joinRoomPress", (room) => {
-    // console.log(allRooms.find((el) => el.room == room).players.length);
-    // if (allRooms.find((el) => el.room == room).players.length === 1) {
-    //   console.log(5);
-    // }
-    socket.emit("attachRoom", room);
-    socket.join(room);
     if (!allRooms.find((el) => el.room == room)) {
       allRooms.push({ room, players: [] });
 
