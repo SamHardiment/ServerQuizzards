@@ -28,13 +28,12 @@ io.on("connection", (socket) => {
     allRooms.forEach((el) => {
       if (el.room == room) {
         if (el.players.length === 5) {
-          console.log("hello");
-
           socket.emit("maxPartyError", room);
+        } else {
+          el.players.push(user);
+          socket.emit("addPlayer", el.players, room);
+          socket.to(room).emit("addPlayer", el.players, room);
         }
-        el.players.push(user);
-        socket.emit("addPlayer", el.players, room);
-        socket.to(room).emit("addPlayer", el.players, room);
       }
     });
   }
