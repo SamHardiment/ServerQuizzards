@@ -16,40 +16,47 @@ const server = app.listen(process.env.PORT, () =>
 );
 
 //IO connections and functions
-
 const io = socket(server, {
   cors: {
-    origin: ["http://localhost:3000"],
+    origin: "*",
     credentials: true,
   },
 });
 
+let players = [];
 io.on("connection", (socket) => {
+  function updateUsers(user, room) {
+    players.forEach((el) => {
+      if (el.room == room) {
+        el.players.push(user);
+        socket.emit("addPlayer", el.players, room);
+        socket.to(room).emit("addPlayer", el.players, room);
+      }
+    });
+  }
+  function checkForUsers(room) {
+    players.forEach((el) => {
+      if (el.room == room) {
+        socket.emit("addPlayer", el.players, room);
+        socket.to(room).emit("addPlayer", el.players, room);
+      }
+    });
+  }
+
   socket.on("joinRoomPress", (room) => {
     socket.emit("attachRoom", room);
     socket.join(room);
+
+    if (!players.find((el) => el.room == room)) {
+      players.push({ room, players: [] });
+    }
+    checkForUsers(room);
   });
   socket.on("addUserPress", (user, room) => {
-    socket.to(room).emit("addPlayer", user, room);
+    updateUsers(user, room);
   });
 });
 
 app.get("/", (req, res) => {
   res.send("hello server");
 });
-
-/* mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("DB Connetion Successfull");
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
-
-app.use("/api/auth", authRoutes);
-app.use("/api/messages", messageRoutes);
- */
