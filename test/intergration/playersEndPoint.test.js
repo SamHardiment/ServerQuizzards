@@ -5,8 +5,8 @@ describe("player endpoints", () => {
   });
 
   beforeAll(async () => {
-    api = app.listen(8000, () =>
-      console.log("Test server running on port 8000")
+    api = app.listen(5000, () =>
+      console.log("Test server running on port 5000")
     );
   });
 

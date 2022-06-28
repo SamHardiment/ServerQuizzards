@@ -12,13 +12,13 @@ describe("players controller", () => {
   afterAll(() => jest.resetAllMocks());
 
   describe("index", () => {
-    test("it returns authors with a 200 status code", async () => {
+    test("it returns players with a 200 status code", async () => {
       jest
         .spyOn(Player, "all", "get")
-        .mockResolvedValue(["player1", "player2"]);
-      await authorsController.index(null, mockRes);
+        .mockResolvedValue(["plsayer1", "player2"]);
+      await playersController.index(null, mockRes);
       expect(mockStatus).toHaveBeenCalledWith(200);
-      expect(mockJson).toHaveBeenCalledWith(["author1", "author2"]);
+      expect(mockJson).toHaveBeenCalledWith(["player1", "player2"]);
     });
   });
 });
