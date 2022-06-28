@@ -22,11 +22,16 @@ const io = socket(server, {
   },
 });
 
-let players = [];
+let allRooms = [];
 io.on("connection", (socket) => {
   function updateUsers(user, room) {
-    players.forEach((el) => {
+    allRooms.forEach((el) => {
       if (el.room == room) {
+        if (el.players.length === 5) {
+          console.log("hello");
+
+          socket.emit("maxPartyError", room);
+        }
         el.players.push(user);
         socket.emit("addPlayer", el.players, room);
         socket.to(room).emit("addPlayer", el.players, room);
@@ -34,7 +39,7 @@ io.on("connection", (socket) => {
     });
   }
   function checkForUsers(room) {
-    players.forEach((el) => {
+    allRooms.forEach((el) => {
       if (el.room == room) {
         socket.emit("addPlayer", el.players, room);
         socket.to(room).emit("addPlayer", el.players, room);
@@ -46,16 +51,16 @@ io.on("connection", (socket) => {
     socket.emit("attachRoom", room);
     socket.join(room);
 
-    if (!players.find((el) => el.room == room)) {
-      players.push({ room, players: [] });
+    if (!allRooms.find((el) => el.room == room)) {
+      allRooms.push({ room, players: [] });
     }
     checkForUsers(room);
   });
   socket.on("addUserPress", (user, room) => {
     updateUsers(user, room);
   });
-  socket.on("sendMessage", (message, room,user) => {
-    console.log(message)
+  socket.on("sendMessage", (message, room, user) => {
+    console.log(message);
     socket.to(room).emit("recieveMessage", user, room);
   });
 });
