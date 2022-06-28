@@ -83,8 +83,11 @@ io.on("connection", (socket) => {
   //Game page socket
 
   socket.on("sendMessage", (message, room, user) => {
-    console.log(message);
     socket.to(room).emit("recieveMessage", user, room);
+  });
+  // Sending game catergory
+  socket.on("sendCatergory", (room, catergoryInput) => {
+    socket.emit("recieveCatergory", room, catergoryInput);
   });
 });
 
