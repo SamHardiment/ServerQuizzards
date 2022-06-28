@@ -50,6 +50,8 @@ io.on("connection", (socket) => {
   //Socket Requests
 
   //Home page socket
+
+  //Joining room (checks if more than 5)
   socket.on("joinRoomPress", (room) => {
     // console.log(allRooms.find((el) => el.room == room).players.length);
     // if (allRooms.find((el) => el.room == room).players.length === 1) {
@@ -65,12 +67,19 @@ io.on("connection", (socket) => {
     checkForUsers(room);
   });
 
+  //Adding username to list (checks if exists)
   socket.on("addUserPress", (user, room) => {
     updateUsers(user, room);
   });
 
+  //Sending personal data to game page
   socket.on("sendData", (room, user, players) => {
     socket.emit("recieveData", room, user, players);
+  });
+
+  //Navigates everyone in same room
+  socket.on("navigateAllPlayers", (room) => {
+    socket.to(room).emit("navigateToGame");
   });
 
   //Game page socket
