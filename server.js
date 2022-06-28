@@ -68,8 +68,6 @@ io.on("connection", (socket) => {
   socket.on("addUserPress", (user, room) => {
     updateUsers(user, room);
   });
-<<<<<<< HEAD
-=======
 
   socket.on("sendData", (room, user, players) => {
     socket.emit("recieveData", room, user, players);
@@ -77,7 +75,6 @@ io.on("connection", (socket) => {
 
   //Game page socket
 
->>>>>>> 0da27072a6e6943356bfb0befe22c77b81dc1bd7
   socket.on("sendMessage", (message, room, user) => {
     console.log(message);
     socket.to(room).emit("recieveMessage", user, room);
