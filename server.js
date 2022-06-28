@@ -47,11 +47,16 @@ io.on("connection", (socket) => {
   }
 
   socket.on("joinRoomPress", (room) => {
+    // console.log(allRooms.find((el) => el.room == room).players.length);
+    // if (allRooms.find((el) => el.room == room).players.length === 1) {
+    //   console.log(5);
+    // }
     socket.emit("attachRoom", room);
     socket.join(room);
-
     if (!allRooms.find((el) => el.room == room)) {
       allRooms.push({ room, players: [] });
+
+      // console.log(room, allRooms);
     }
     checkForUsers(room);
   });
