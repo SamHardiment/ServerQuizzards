@@ -13,12 +13,20 @@ describe("players controller", () => {
 
   describe("index", () => {
     test("it returns players with a 200 status code", async () => {
-      jest
-        .spyOn(Player, "all", "get")
-        .mockResolvedValue(["plsayer1", "player2"]);
+      jest.spyOn(Player, "all", "get").mockResolvedValue(["player1", 5]);
       await playersController.index(null, mockRes);
       expect(mockStatus).toHaveBeenCalledWith(200);
-      expect(mockJson).toHaveBeenCalledWith(["player1", "player2"]);
+      expect(mockJson).toHaveBeenCalledWith(["player1", 5]);
+    });
+  });
+
+  describe("index", () => {
+    test("it returns players with a 500 status code when the fetch fails", async () => {
+      jest
+        .spyOn(Player, "all", "get")
+        .mockResolvedValue(["player1", "player2"]);
+      await playersController.index(null, mockRes);
+      expect(mockStatus).toHaveBeenCalledWith(500);
     });
   });
 });
