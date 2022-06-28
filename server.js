@@ -31,6 +31,10 @@ io.on("connection", (socket) => {
   socket.on("addUserPress", (user, room) => {
     socket.to(room).emit("addPlayer", user, room);
   });
+  socket.on("sendMessage", (message, room,user) => {
+    console.log(message)
+    socket.to(room).emit("recieveMessage", user, room);
+  });
 });
 
 app.get("/", (req, res) => {
