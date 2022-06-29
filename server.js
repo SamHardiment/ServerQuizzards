@@ -35,12 +35,12 @@ io.on("connection", (socket) => {
     allRooms.forEach((el) => {
       if (el.room == room) {
         el.players.push(user);
-        socket.emit("addPlayer", el.players, room);
-        socket.to(room).emit("addPlayer", el.players, room);
+        socket.emit("addPlayer", el.players, room, user);
+        socket.to(room).emit("addPlayer", el.players, room, user);
       }
     });
   }
-  function checkForUsers(room) {
+  function checkForUsers(room, isHost) {
     allRooms.forEach((el) => {
       if (el.room == room) {
         if (el.players.length === 4) {
@@ -48,7 +48,7 @@ io.on("connection", (socket) => {
           socket.emit("attachRoom", "This room is full!");
           socket.join(room);
         } else {
-          socket.emit("addPlayer", el.players, room);
+          socket.emit("addMe", el.players, room, isHost);
           socket.to(room).emit("addPlayer", el.players, room);
           socket.emit("attachRoom", room);
           socket.join(room);
@@ -66,8 +66,6 @@ io.on("connection", (socket) => {
     if (!allRooms.find((el) => el.room == room)) {
       allRooms.push({ room, players: [], messages: [] });
       checkForUsers(room, true);
-
-      // console.log(room, allRooms);
     } else {
       checkForUsers(room, false);
     }
@@ -79,8 +77,8 @@ io.on("connection", (socket) => {
   });
 
   //Sending personal data to game page
-  socket.on("sendData", (room, user, players) => {
-    socket.emit("recieveData", room, user, players);
+  socket.on("sendData", (room, user, players, catergory, host) => {
+    socket.emit("recieveData", room, user, players, catergory, host);
   });
 
   //Navigates everyone in same room
@@ -92,19 +90,19 @@ io.on("connection", (socket) => {
 
   //Messaging
   socket.on("sendMessage", (message, room, user) => {
-    console.log(message);
     socket.to(room).emit("recieveMessage", message, room, user);
+  });
+
+  //Setting active player
+
+  socket.on("sendActivePlayerChange", (activePlayer, room) => {
+    socket.to(room).emit("recieveActivePlayerChange", activePlayer);
   });
 
   //Drawing
 
   socket.on("canvas-data", (data, room) => {
-    socket.to("a").emit("canvas-data", data);
-  });
-
-  // Sending game catergory
-  socket.on("sendCatergory", (room, catergoryInput) => {
-    socket.emit("recieveCatergory", room, catergoryInput);
+    socket.to(room).emit("canvas-data", data);
   });
 });
 
