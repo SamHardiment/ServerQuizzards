@@ -82,9 +82,15 @@ io.on("connection", (socket) => {
 
   //Game page socket
 
+  //Messaging
   socket.on("sendMessage", (message, room, user) => {
     console.log(message);
     socket.to(room).emit("recieveMessage", message, room, user);
+  });
+
+  //Drawing
+  socket.on("allDrawRequest", (room) => {
+    socket.to(room).emit("allDraw");
   });
 });
 
