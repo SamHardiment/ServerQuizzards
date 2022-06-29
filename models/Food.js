@@ -2,7 +2,7 @@ const db = require("../dbConfig");
 module.exports = class Food {
   constructor(data) {
     this.id = data.id;
-    this.food = data.food;
+    this.word = data.word;
   }
   static get all() {
     return new Promise(async (resolve, reject) => {

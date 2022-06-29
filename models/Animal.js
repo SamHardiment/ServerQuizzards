@@ -2,7 +2,7 @@ const db = require("../dbConfig");
 module.exports = class Animal {
   constructor(data) {
     this.id = data.id;
-    this.animal = data.animal;
+    this.word = data.word;
   }
   static get all() {
     return new Promise(async (resolve, reject) => {

@@ -97,9 +97,11 @@ io.on("connection", (socket) => {
   });
 
   //Drawing
+
   socket.on("canvas-data", (data, room) => {
     socket.to("a").emit("canvas-data", data);
   });
+
   // Sending game catergory
   socket.on("sendCatergory", (room, catergoryInput) => {
     socket.emit("recieveCatergory", room, catergoryInput);
