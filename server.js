@@ -104,6 +104,28 @@ io.on("connection", (socket) => {
   socket.on("canvas-data", (data, room) => {
     socket.to(room).emit("canvas-data", data);
   });
+
+  // Countdown
+
+  //   socket.on('startRound', function(socket) {
+  //     let countdown = 10;
+  //     let roundTime = setInterval(function() {
+  //     io.sockets.emit('counter', {countdown: countdown});
+  //     countdown--;
+  //     if (counter === 0) {
+  //       io.sockets.emit('changeActivePlayer')
+  //       clearInterval(roundTime)
+  //     }
+  //   }, 1000);
+  //   })
+
+  // All words
+
+  socket.on("sendAllWords", (allWords, room) => {
+    console.log(allWords);
+
+    socket.emit("recieveAllWords", allWords);
+  });
 });
 
 app.get("/", (req, res) => {
