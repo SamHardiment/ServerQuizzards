@@ -65,10 +65,12 @@ io.on("connection", (socket) => {
   socket.on("joinRoomPress", (room) => {
     if (!allRooms.find((el) => el.room == room)) {
       allRooms.push({ room, players: [], messages: [] });
+      checkForUsers(room, true);
 
       // console.log(room, allRooms);
+    } else {
+      checkForUsers(room, false);
     }
-    checkForUsers(room);
   });
 
   //Adding username to list (checks if exists)
@@ -95,13 +97,12 @@ io.on("connection", (socket) => {
   });
 
   //Drawing
-  socket.on("allDrawRequest", (room) => {
-    socket.to(room).emit("allDraw");
-
+  socket.on("canvas-data", (data, room) => {
+    socket.to("a").emit("canvas-data", data);
+  });
   // Sending game catergory
   socket.on("sendCatergory", (room, catergoryInput) => {
     socket.emit("recieveCatergory", room, catergoryInput);
-
   });
 });
 
