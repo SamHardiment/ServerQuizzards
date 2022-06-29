@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS animals;
 
 CREATE TABLE animals(
     id serial PRIMARY KEY,
-    animal varchar(100) NOT NULL
+    word varchar(100) NOT NULL
 );
 
 
@@ -18,7 +18,7 @@ DROP TABLE IF EXISTS food;
 
 CREATE TABLE food(
     id serial PRIMARY KEY,
-    food varchar(100) NOT NULL
+    word varchar(100) NOT NULL
 );
 
 
@@ -26,10 +26,10 @@ DROP TABLE IF EXISTS random;
 
 CREATE TABLE random(
     id serial PRIMARY KEY,
-    random varchar(100) NOT NULL
+    word varchar(100) NOT NULL
 );
 
-INSERT INTO animals(animal)
+INSERT INTO animals(word)
 VALUES
 ('Hamster'),
 ('Alligator'),
@@ -37,10 +37,19 @@ VALUES
 ('Kangaroo'),
 ('Turtle');
 
-INSERT INTO food(food)
+INSERT INTO food(word)
 VALUES
 ('Spaghetti'),
 ('Black Pudding'),
 ('Bangers and Mash'),
 ('Bruschetta'),
-('Pizza')
+('Pizza');
+
+
+INSERT INTO random(word)
+VALUES 
+('Feather'),
+('Brick'),
+('Garden'),
+('Castle'),
+('Court');

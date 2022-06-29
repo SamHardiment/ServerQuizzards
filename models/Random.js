@@ -2,7 +2,7 @@ const db = require("../dbConfig");
 module.exports = class Random {
   constructor(data) {
     this.id = data.id;
-    this.random = data.random;
+    this.word = data.word;
   }
   static get all() {
     return new Promise(async (resolve, reject) => {
