@@ -58,7 +58,7 @@ io.on("connection", (socket) => {
   //Joining room (checks if more than 5)
   socket.on("joinRoomPress", (room) => {
     if (!allRooms.find((el) => el.room == room)) {
-      allRooms.push({ room, players: [] });
+      allRooms.push({ room, players: [], messages: [] });
 
       // console.log(room, allRooms);
     }
@@ -83,7 +83,12 @@ io.on("connection", (socket) => {
   //Game page socket
 
   socket.on("sendMessage", (message, room, user) => {
+<<<<<<< HEAD
     socket.to(room).emit("recieveMessage", user, room);
+=======
+    console.log(message);
+    socket.to(room).emit("recieveMessage", message, room, user);
+>>>>>>> 23933eccc7f5d244e1f17fe3aedaa12e303d9886
   });
   // Sending game catergory
   socket.on("sendCatergory", (room, catergoryInput) => {
