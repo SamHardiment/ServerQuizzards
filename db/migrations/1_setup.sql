@@ -8,9 +8,9 @@ CREATE TABLE playesr (
 
 DROP TABLE IF EXISTS animals;
 
-CREATE TABLE animals (
+CREATE TABLE animals(
     id serial PRIMARY KEY,
-    animal varchar(100) NOT NULL,
+    animal varchar(100) NOT NULL
 );
 
 
