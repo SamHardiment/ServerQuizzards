@@ -7,7 +7,7 @@ module.exports = class Random {
   static get all() {
     return new Promise(async (resolve, reject) => {
       try {
-        const random = await db.query("SELECT * FROM random;");
+        const result = await db.query("SELECT * FROM random;");
         const randoms = result.rows.map((random) => new Animal(random));
         resolve(randoms);
       } catch (err) {
