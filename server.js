@@ -8,7 +8,13 @@ app.use(cors());
 app.use(express.json());
 //Server Routes
 const playersRoute = require("./routes/players");
+const animalRoute = require("./routes/animals");
+const foodRoute = require("./routes/food");
+const randomRoute = require("./routes/random");
 app.use("/players", playersRoute);
+app.use("/animals", animalRoute);
+app.use("/food", foodRoute);
+app.use("/random", randomRoute);
 
 const server = app.listen(process.env.PORT, () =>
   console.log(`Server started on ${process.env.PORT}`)
@@ -83,12 +89,8 @@ io.on("connection", (socket) => {
   //Game page socket
 
   socket.on("sendMessage", (message, room, user) => {
-<<<<<<< HEAD
-    socket.to(room).emit("recieveMessage", user, room);
-=======
     console.log(message);
     socket.to(room).emit("recieveMessage", message, room, user);
->>>>>>> 23933eccc7f5d244e1f17fe3aedaa12e303d9886
   });
   // Sending game catergory
   socket.on("sendCatergory", (room, catergoryInput) => {
