@@ -8,7 +8,7 @@ module.exports = class Random {
     return new Promise(async (resolve, reject) => {
       try {
         const result = await db.query("SELECT * FROM random;");
-        const randoms = result.rows.map((random) => new Animal(random));
+        const randoms = result.rows.map((random) => new Random(random));
         resolve(randoms);
       } catch (err) {
         reject("Error retrieving all randoms");
