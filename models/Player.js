@@ -2,8 +2,9 @@ const db = require("../dbConfig");
 module.exports = class Player {
   constructor(data) {
     this.id = data.id;
-    this.name = data.name;
+    this.username = data.username;
     this.points = data.points;
+    this.isactive = data.isactive;
   }
   static get all() {
     return new Promise(async (resolve, reject) => {
