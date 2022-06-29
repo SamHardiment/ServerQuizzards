@@ -16,15 +16,31 @@ CREATE TABLE animals(
 
 DROP TABLE IF EXISTS food;
 
-CREATE TABLE food (
+CREATE TABLE food(
     id serial PRIMARY KEY,
-    animal varchar(100) NOT NULL,
+    food varchar(100) NOT NULL
 );
 
 
 DROP TABLE IF EXISTS random;
 
-CREATE TABLE random (
+CREATE TABLE random(
     id serial PRIMARY KEY,
-    animal varchar(100) NOT NULL,
+    random varchar(100) NOT NULL
 );
+
+INSERT INTO animals(animal)
+VALUES
+('Hamster'),
+('Alligator'),
+('Rhino'),
+('Kangaroo'),
+('Turtle');
+
+INSERT INTO food(food)
+VALUES
+('Spaghetti'),
+('Black Pudding'),
+('Bangers and Mash'),
+('Bruschetta'),
+('Pizza')
