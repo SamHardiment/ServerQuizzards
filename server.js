@@ -97,11 +97,11 @@ io.on("connection", (socket) => {
   //Drawing
   socket.on("allDrawRequest", (room) => {
     socket.to(room).emit("allDraw");
+  });
 
   // Sending game catergory
   socket.on("sendCatergory", (room, catergoryInput) => {
     socket.emit("recieveCatergory", room, catergoryInput);
-
   });
 });
 
