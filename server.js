@@ -111,26 +111,24 @@ io.on("connection", (socket) => {
     socket.to(room).emit("canvas-data", data);
   });
 
-  // Countdown
-
-  //   socket.on('startRound', function(socket) {
-  //     let countdown = 10;
-  //     let roundTime = setInterval(function() {
-  //     io.sockets.emit('counter', {countdown: countdown});
-  //     countdown--;
-  //     if (counter === 0) {
-  //       io.sockets.emit('changeActivePlayer')
-  //       clearInterval(roundTime)
-  //     }
-  //   }, 1000);
-  //   })
+  // Send Catergory
+  socket.on("sendCatergory", (catergoryChoice, room) => {
+    socket.to(room).emit("recieveCatergory", catergoryChoice);
+  });
+  socket.on("sendCatergoryHost", (catergoryChoice, room) => {
+    socket.emit("recieveCatergoryHost", catergoryChoice, room);
+  });
 
   // All words
 
   socket.on("sendAllWords", (allWords, room) => {
-    console.log(allWords);
-
     socket.emit("recieveAllWords", allWords);
+  });
+
+  // Send Current Word to all room members
+
+  socket.on("sendRandomWord", (randomWord, room) => {
+    socket.to(room).emit("recieveRandomWord", randomWord);
   });
 });
 
