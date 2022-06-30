@@ -186,7 +186,16 @@ io.on("connection", (socket) => {
       }
     });
   });
-  socket.on("sendClearGuessed", (room, user) => {});
+  //Timer
+
+  socket.on("sendTimesUp", (room) => {
+    socket.emit("recieveTimesUp");
+  });
+
+  socket.on("sendResetTimers", (room) => {
+    socket.emit("recieveResetTimers");
+    socket.to(room).emit("recieveResetTimers");
+  });
   //On gameover
   socket.on("sendNavigateToGameOver", (room) => {
     socket.to(room).emit("recieveNavigateToGameOver");
