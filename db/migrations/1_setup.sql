@@ -35,6 +35,16 @@ VALUES
 ('Alligator'),
 ('Rhino'),
 ('Kangaroo'),
+('Turtle'),
+('Hamster'),
+('Alligator'),
+('Rhino'),
+('Kangaroo'),
+('Turtle'),
+('Hamster'),
+('Alligator'),
+('Rhino'),
+('Kangaroo'),
 ('Turtle');
 
 INSERT INTO food(word)
