@@ -77,8 +77,8 @@ io.on("connection", (socket) => {
   });
 
   //Sending personal data to game page
-  socket.on("sendData", (room, user, players, catergory, host) => {
-    socket.emit("recieveData", room, user, players, catergory, host);
+  socket.on("sendData", (room, user, players, catergory, mode, host) => {
+    socket.emit("recieveData", room, user, players, catergory, mode host);
   });
 
   //Navigates everyone in same room
