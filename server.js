@@ -112,6 +112,12 @@ io.on("connection", (socket) => {
     socket.to(room).emit("canvas-data", data);
   });
 
+  //Clearing slate
+
+  socket.on("sendBlankSlate", (room) => {
+    socket.to(room).emit("recieveBlankSlate");
+  });
+
   //Setting hard mode
 
   socket.on("sendHardMode", (room) => {

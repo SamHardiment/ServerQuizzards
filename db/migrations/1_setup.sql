@@ -31,6 +31,14 @@ CREATE TABLE random(
 
 INSERT INTO animals(word)
 VALUES
+
+('Hamster'),
+('Alligator'),
+('Rhino'),
+('Kangaroo'),
+('Turtle'),
+
+
 ('Angelfish'),
 ('Black Widow Spider'),
 ('Bumblebee'),
@@ -51,6 +59,7 @@ VALUES
 ('Narwhal'),
 ('Dolphin'),
 ('Octopus');
+
 
 INSERT INTO food(word)
 VALUES
