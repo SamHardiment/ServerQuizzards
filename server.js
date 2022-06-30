@@ -99,6 +99,12 @@ io.on("connection", (socket) => {
     socket.to(room).emit("recieveActivePlayerChange", activePlayer);
   });
 
+  //Removing active player
+
+  socket.on("sendRemoveActivePlayer", (activePlayer, room) => {
+    socket.to(room).emit("recieveRemoveActivePlayer", activePlayer);
+  });
+
   //Drawing
 
   socket.on("canvas-data", (data, room) => {
