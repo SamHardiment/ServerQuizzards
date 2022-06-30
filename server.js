@@ -133,15 +133,23 @@ io.on("connection", (socket) => {
   });
 
   //Adding points on correct guess
-  socket.on("pointChange", (room, user) => {
+  socket.on("sendPointChange", (room, user) => {
+    let points;
+
     allRooms.forEach((el) => {
       if (el.room == room) {
+        points = el.points;
+        console.log(points);
         el.points.forEach((player) => {
           if (user == player.user) {
+            player.points += 100;
           }
         });
       }
     });
+    console.log(points);
+    socket.emit("recievePointChange", room, points);
+    socket.to(room).emit("recievePointChange", room, points);
   });
 });
 
