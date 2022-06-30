@@ -112,6 +112,12 @@ io.on("connection", (socket) => {
     socket.to(room).emit("canvas-data", data);
   });
 
+  //Setting hard mode
+
+  socket.on("sendHardMode", (room) => {
+    socket.to(room).emit("recieveHardMode");
+  });
+
   // Send Catergory
   socket.on("sendCatergory", (catergoryChoice, room) => {
     socket.to(room).emit("recieveCatergory", catergoryChoice);
@@ -129,6 +135,7 @@ io.on("connection", (socket) => {
   // Send Current Word to all room members
 
   socket.on("sendRandomWord", (randomWord, room) => {
+    socket.emit("recieveRandomWord", randomWord);
     socket.to(room).emit("recieveRandomWord", randomWord);
   });
 
@@ -162,6 +169,21 @@ io.on("connection", (socket) => {
 
     socket.emit("recievePointChange", room, points);
     socket.to(room).emit("recievePointChange", room, points);
+  });
+
+  //On guessed
+  socket.on("sendGuessed", (room, user) => {
+    allRooms.forEach((el) => {
+      if (el.room == room) {
+        socket.emit("recieveGuessed", user);
+        socket.to(room).emit("recieveGuessed", user);
+      }
+    });
+  });
+  socket.on("sendClearGuessed", (room, user) => {});
+  //On gameover
+  socket.on("sendNavigateToGameOver", (room) => {
+    socket.to(room).emit("recieveNavigateToGameOver");
   });
 });
 
