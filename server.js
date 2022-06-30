@@ -35,6 +35,7 @@ io.on("connection", (socket) => {
     allRooms.forEach((el) => {
       if (el.room == room) {
         el.players.push(user);
+        el.points.push({ user, points: 0 });
         socket.emit("addPlayer", el.players, room, user);
         socket.to(room).emit("addPlayer", el.players, room, user);
       }
@@ -64,7 +65,7 @@ io.on("connection", (socket) => {
   //Joining room (checks if more than 5)
   socket.on("joinRoomPress", (room) => {
     if (!allRooms.find((el) => el.room == room)) {
-      allRooms.push({ room, players: [], messages: [] });
+      allRooms.push({ room, players: [], points: [] });
       checkForUsers(room, true);
     } else {
       checkForUsers(room, false);
@@ -129,6 +130,18 @@ io.on("connection", (socket) => {
 
   socket.on("sendRandomWord", (randomWord, room) => {
     socket.to(room).emit("recieveRandomWord", randomWord);
+  });
+
+  //Adding points on correct guess
+  socket.on("pointChange", (room, user) => {
+    allRooms.forEach((el) => {
+      if (el.room == room) {
+        el.points.forEach((player) => {
+          if (user == player.user) {
+          }
+        });
+      }
+    });
   });
 });
 
