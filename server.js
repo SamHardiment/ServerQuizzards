@@ -199,8 +199,15 @@ io.on("connection", (socket) => {
   //On gameover
   socket.on("sendNavigateToGameOver", (room) => {
     socket.to(room).emit("recieveNavigateToGameOver");
-    socket.to(room).emit("scoreBoard");
-    socket.emit("scoreBoard");
+    let points;
+
+    allRooms.forEach((el) => {
+      if (el.room == room) {
+        points = el.points;
+      }
+    });
+    socket.to(room).emit("scoreBoard", points);
+    socket.emit("scoreBoard", points);
   });
 });
 
