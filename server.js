@@ -44,7 +44,7 @@ io.on("connection", (socket) => {
   function checkForUsers(room, isHost) {
     allRooms.forEach((el) => {
       if (el.room == room) {
-        if (el.players.length === 4) {
+        if (el.players.length >= 5) {
           socket.emit("maxPartyError", room);
           socket.emit("attachRoom", "This room is full!");
           socket.join(room);
