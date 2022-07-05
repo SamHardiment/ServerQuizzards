@@ -29,6 +29,7 @@ const io = socket(server, {
 });
 
 let allRooms = [];
+
 io.on("connection", (socket) => {
   //Helper functions
   function updateUsers(user, room) {
@@ -57,11 +58,8 @@ io.on("connection", (socket) => {
       }
     });
   }
-
   //Socket Requests
-
   //Home page socket
-
   //Joining room (checks if more than 5)
   socket.on("joinRoomPress", (room) => {
     if (!allRooms.find((el) => el.room == room)) {
@@ -71,59 +69,43 @@ io.on("connection", (socket) => {
       checkForUsers(room, false);
     }
   });
-
   //Adding username to list (checks if exists)
   socket.on("addUserPress", (user, room) => {
     updateUsers(user, room);
   });
-
   //Sending personal data to game page
   socket.on("sendData", (room, user, players, catergory, mode, host) => {
     socket.emit("recieveData", room, user, players, catergory, mode, host);
   });
-
   //Navigates everyone in same room
   socket.on("navigateAllPlayers", (room) => {
     socket.to(room).emit("navigateToGame");
   });
-
   //Game page socket
-
   //Messaging
   socket.on("sendMessage", (message, room, user) => {
     socket.to(room).emit("recieveMessage", message, room, user);
   });
-
   //Setting active player
-
   socket.on("sendActivePlayerChange", (activePlayer, room) => {
     socket.to(room).emit("recieveActivePlayerChange", activePlayer);
   });
-
   //Removing active player
-
   socket.on("sendRemoveActivePlayer", (activePlayer, room) => {
     socket.to(room).emit("recieveRemoveActivePlayer", activePlayer);
   });
-
   //Drawing
-
   socket.on("canvas-data", (data, room) => {
     socket.to(room).emit("canvas-data", data);
   });
-
   //Clearing slate
-
   socket.on("sendBlankSlate", (room) => {
     socket.to(room).emit("recieveBlankSlate");
   });
-
   //Setting hard mode
-
   socket.on("sendHardMode", (room) => {
     socket.to(room).emit("recieveHardMode");
   });
-
   // Send Catergory
   socket.on("sendCatergory", (catergoryChoice, room) => {
     socket.to(room).emit("recieveCatergory", catergoryChoice);
@@ -131,22 +113,16 @@ io.on("connection", (socket) => {
   socket.on("sendCatergoryHost", (catergoryChoice, room) => {
     socket.emit("recieveCatergoryHost", catergoryChoice, room);
   });
-
   // All words
-
   socket.on("sendAllWords", (allWords, room) => {
     socket.emit("recieveAllWords", allWords);
   });
-
   // Send Current Word to all room members
-
   socket.on("sendRandomWord", (randomWord, room) => {
     socket.emit("recieveRandomWord", randomWord);
     socket.to(room).emit("recieveRandomWord", randomWord);
   });
-
   //Adding points on correct guess
-
   socket.on("sendPointsBegin", (room) => {
     let points;
 
@@ -176,7 +152,6 @@ io.on("connection", (socket) => {
     socket.emit("recievePointChange", room, points);
     socket.to(room).emit("recievePointChange", room, points);
   });
-
   //On guessed
   socket.on("sendGuessed", (room, user) => {
     allRooms.forEach((el) => {
@@ -187,11 +162,9 @@ io.on("connection", (socket) => {
     });
   });
   //Timer
-
   socket.on("sendTimesUp", (room) => {
     socket.emit("recieveTimesUp");
   });
-
   socket.on("sendResetTimers", (room) => {
     socket.emit("recieveResetTimers");
     socket.to(room).emit("recieveResetTimers");
